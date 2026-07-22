@@ -67,6 +67,14 @@ export default function AdminPage() {
   useEffect(() => setTestimonials(dbTestimonials), [dbTestimonials]);
   useEffect(() => setFaqs(dbFaqs), [dbFaqs]);
 
+  // The database REST layer can return RPC results either as a plain scalar
+  // (true) or as a row array like [{ fn_name: true }] — handle both shapes.
+  const rpcOk = (data: unknown, fnName: string): boolean => {
+    if (data === true) return true;
+    if (Array.isArray(data) && (data[0] as Record<string, unknown> | undefined)?.[fnName] === true) return true;
+    return false;
+  };
+
   const verify = async (e: React.FormEvent) => {
     e.preventDefault();
     setVerifying(true);
@@ -75,7 +83,7 @@ export default function AdminPage() {
       const { data, error } = await supabase.rpc("admin_verify_password", {
         p_password: password,
       });
-      if (error || data !== true) throw new Error("Invalid password");
+      if (error || !rpcOk(data, "admin_verify_password")) throw new Error("Invalid password");
       sessionStorage.setItem("ami_admin_pw", password);
       setAuthed(true);
     } catch {
@@ -94,7 +102,7 @@ export default function AdminPage() {
         p_key: key,
         p_value: value,
       });
-      if (error || data !== true) throw new Error(error?.message ?? "Save failed");
+      if (error || !rpcOk(data, "admin_save_content")) throw new Error(error?.message ?? "Save failed");
       setSavedMsg("Changes saved! They are now live on the site.");
       setTimeout(() => setSavedMsg(""), 4000);
     } catch (err) {
@@ -103,6 +111,7 @@ export default function AdminPage() {
       setSaving(false);
     }
   };
+
 
   const loadAudits = async () => {
     setAuditsLoading(true);
