@@ -4,6 +4,7 @@ import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import ProcessSection from "@/components/ProcessSection";
 import PortfolioSection from "@/components/PortfolioSection";
+import AuditBannerSection from "@/components/AuditBannerSection";
 import TimelineSection from "@/components/TimelineSection";
 import PackagesSection from "@/components/PackagesSection";
 import ResourceCenterSection from "@/components/ResourceCenterSection";
@@ -20,6 +21,7 @@ export default function AppLayout() {
         <ServicesSection />
         <ProcessSection />
         <PortfolioSection />
+        <AuditBannerSection />
         <TimelineSection />
         <PackagesSection />
         <ResourceCenterSection />
