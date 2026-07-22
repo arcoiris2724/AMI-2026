@@ -1,7 +1,7 @@
 // ─── Advance My Idea — Single Source of Truth ─────────────────────────────
 
 export const LOGO_URL =
-  "https://d64gsuwffb70l.cloudfront.net/6917af11eb66b8b0c2b0bc86_1784733504476_a38392ce.png";
+  "https://d64gsuwffb70l.cloudfront.net/6a60dfea4cabbf15ee462cbd_1784734819839_1a972eb3.webp";
 
 export const HERO_BG =
   "https://d64gsuwffb70l.cloudfront.net/6a60dfea4cabbf15ee462cbd_1784733757230_96363b0e.jpg";
