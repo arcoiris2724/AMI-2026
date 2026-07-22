@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import ProcessSection from "@/components/ProcessSection";
 import PortfolioSection from "@/components/PortfolioSection";
@@ -15,6 +16,7 @@ export default function AppLayout() {
       <Header />
       <main>
         <Hero />
+        <AboutSection />
         <ServicesSection />
         <ProcessSection />
         <PortfolioSection />
@@ -27,3 +29,4 @@ export default function AppLayout() {
     </div>
   );
 }
+

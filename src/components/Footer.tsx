@@ -3,14 +3,15 @@ import { CheckCircle2, Facebook, Loader2 } from "lucide-react";
 import { LOGO_URL, BRAND, SERVICES, CRM_SUBSCRIBE_URL, FACEBOOK_URL, BOOKING_URL } from "@/data/siteData";
 
 const COMPANY_LINKS = [
+  { label: "About Us", href: "#about" },
   { label: "Our Process", href: "#process" },
   { label: "Portfolio", href: "#portfolio" },
   { label: "Resource Center", href: "#resources" },
-
   { label: "Our Story", href: "#timeline" },
   { label: "Packages", href: "#packages" },
   { label: "Contact", href: "#contact" },
 ];
+
 
 export default function Footer() {
   const [email, setEmail] = useState("");

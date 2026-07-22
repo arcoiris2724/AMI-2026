@@ -24,6 +24,72 @@ export const BRAND = {
 // Brand colors echoing the stained-glass eye logo
 export const COLORS = ["#E4342B", "#1D4ED8", "#FACC15", "#16A34A", "#DB2777", "#7C3AED"];
 
+// ─── About / Our Story ─────────────────────────────────────────────────────
+export const MISSION_STATEMENT =
+  "To advance every idea entrusted to us — pairing visionary strategy with disciplined execution, and improving relentlessly until our clients lead their markets.";
+
+export const ABOUT_STORY = [
+  "Advance My Idea was founded in 1999, at the dawn of the commercial web, as a solution design firm with a simple conviction: great ideas deserve great execution. While the dot-com era chased hype, we built durable digital foundations for businesses that needed results, not buzzwords.",
+  "In 2003 we adopted Kaizen — the Japanese philosophy of continuous improvement — as our operating system. Instead of one-and-done projects, every engagement became a living loop: discover, design, develop, deploy, improve. Small, honest, measurable gains, compounded over months and years, outperform big risky bets. Twenty-plus years of client results have proven it again and again.",
+  "By 2016 we had formalized what clients had long called us: a business development think-tank. We don't just build websites, apps, and campaigns — we sit on your side of the table, analyzing markets, pressure-testing ideas, and designing solutions before a single line of code is written. Strategy and execution, under one roof, accountable to the same numbers.",
+];
+
+export interface CoreValue {
+  title: string;
+  description: string;
+  color: string;
+  icon: string; // lucide icon name key
+}
+
+export const CORE_VALUES: CoreValue[] = [
+  {
+    title: "Kaizen, Always",
+    description:
+      "Continuous improvement is our default setting. Every site, campaign, and process we touch gets measurably better, week after week.",
+    color: "#E4342B",
+    icon: "RefreshCw",
+  },
+  {
+    title: "Think First, Build Second",
+    description:
+      "As a think-tank, we interrogate the problem before prescribing the solution. Strategy earns its keep before execution begins.",
+    color: "#1D4ED8",
+    icon: "Lightbulb",
+  },
+  {
+    title: "Radical Accountability",
+    description:
+      "Every engagement has named owners and honest metrics. If a number should move, we say which one — and then we move it.",
+    color: "#16A34A",
+    icon: "Gauge",
+  },
+  {
+    title: "Client Vision, Amplified",
+    description:
+      "It's your idea. Our job is to see it clearly, sharpen it, and advance it further than you imagined possible.",
+    color: "#7C3AED",
+    icon: "Eye",
+  },
+];
+
+export const LOGO_MEANING = {
+  headline: "The Stained-Glass Eye",
+  paragraphs: [
+    "Our logo is a human eye rendered in stained glass, set against a circuit board — and every element is deliberate. The eye is vision: the ability to see an idea's potential before anyone else does. It's the first thing we bring to every engagement.",
+    "The stained glass tells the rest of the story. Like a great business, a stained-glass window is assembled from many distinct pieces — strategy, design, engineering, marketing — each with its own color and character. Individually they're fragments; leaded together with craft, they become something luminous that light passes through.",
+    "And beneath it all, the circuit board: technology as the foundation that carries the vision. Artistry on top, engineering underneath. That's Advance My Idea in a single image — and it's why the eye has watched over every project since we first opened our doors.",
+  ],
+};
+
+export const FOUNDER_MESSAGE = {
+  title: "A Message from Our Founder",
+  quote:
+    "I started Advance My Idea in 1999 because I kept watching brilliant ideas fail for one reason: the gap between vision and execution. Twenty-seven years later, closing that gap is still all we do. We adopted Kaizen not as a slogan but as a promise — that we will never hand you something and walk away, and that next quarter's version of your business will always be better than this one's. Bring us your idea. We'll advance it.",
+  name: "Founder & Principal",
+  signoff: "Advance My Idea · Est. 1999",
+};
+
+
 // ─── Services ──────────────────────────────────────────────────────────────
 export interface Service {
   id: string;

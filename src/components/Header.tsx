@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { LOGO_URL, BRAND, BOOKING_URL } from "@/data/siteData";
 
 const NAV_LINKS = [
+  { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Process", href: "#process" },
   { label: "Work", href: "#portfolio" },
@@ -11,6 +12,7 @@ const NAV_LINKS = [
   { label: "Resources", href: "#resources" },
   { label: "Contact", href: "#contact" },
 ];
+
 
 
 export default function Header() {
