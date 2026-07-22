@@ -100,8 +100,11 @@ export default function AdminPage() {
       const { data, error } = await supabase.rpc("admin_save_content", {
         p_password: password,
         p_key: key,
-        p_value: value,
+        // The DB function accepts a JSON string (text) and casts it to jsonb —
+        // sending a pre-stringified value avoids RPC parameter serialization issues.
+        p_value: JSON.stringify(value),
       });
+
       if (error || !rpcOk(data, "admin_save_content")) throw new Error(error?.message ?? "Save failed");
       setSavedMsg("Changes saved! They are now live on the site.");
       setTimeout(() => setSavedMsg(""), 4000);
