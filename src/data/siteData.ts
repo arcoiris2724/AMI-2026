@@ -565,3 +565,185 @@ export const ARTICLES: Article[] = [
     ],
   },
 ];
+
+// ─── Testimonials ──────────────────────────────────────────────────────────
+export interface Testimonial {
+  id: number;
+  name: string;
+  role: string;
+  company: string;
+  quote: string;
+  rating: number; // out of 5
+  result: string; // headline result achieved
+  service: string;
+  color: string;
+}
+
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    id: 1,
+    name: "Margaret Chen",
+    role: "Managing Partner",
+    company: "Chen & Associates Law",
+    quote:
+      "Advance My Idea rebuilt our entire digital intake process. Within six months our qualified consultation requests tripled — and their quarterly Kaizen reviews keep finding new gains we never would have spotted ourselves.",
+    rating: 5,
+    result: "+214% lead volume",
+    service: "Web Development",
+    color: "#E4342B",
+  },
+  {
+    id: 2,
+    name: "Derek Okafor",
+    role: "E-Commerce Director",
+    company: "Harbor Goods Co.",
+    quote:
+      "We'd been through two agencies before finding this team. Instead of pitching a risky redesign, they refined our storefront week by week. Cart abandonment fell steadily every single month — the compounding effect is real.",
+    rating: 5,
+    result: "+168% conversion rate",
+    service: "Kaizen Optimization",
+    color: "#1D4ED8",
+  },
+  {
+    id: 3,
+    name: "Dr. Priya Raman",
+    role: "Chief Operations Officer",
+    company: "Lakeside Health Network",
+    quote:
+      "They handled a HIPAA-conscious patient portal with the seriousness it deserved — clear milestones, transparent communication, zero surprises. Forty thousand patients onboarded and our front desk finally breathes.",
+    rating: 5,
+    result: "40k patients onboarded",
+    service: "App Development",
+    color: "#16A34A",
+  },
+  {
+    id: 4,
+    name: "Tom Vasquez",
+    role: "Founder & CEO",
+    company: "Summit Industrial Supply",
+    quote:
+      "Their SEO team took us from page four to position one for the searches that actually drive revenue. Organic traffic is up nearly threefold, and it's now our cheapest and best-converting channel by far.",
+    rating: 5,
+    result: "+287% organic traffic",
+    service: "SEO",
+    color: "#FACC15",
+  },
+  {
+    id: 5,
+    name: "Alicia Fontaine",
+    role: "Marketing VP",
+    company: "Bella Vita Restaurant Group",
+    quote:
+      "Twelve locations, one ad budget, and a team that treats every dollar like their own. The geo-targeted campaigns fill seats nightly, and the monthly ROAS reviews mean we always know exactly what's working.",
+    rating: 5,
+    result: "5.2x return on ad spend",
+    service: "SEM & Paid Media",
+    color: "#DB2777",
+  },
+  {
+    id: 6,
+    name: "James Whitfield",
+    role: "President",
+    company: "Whitfield Manufacturing",
+    quote:
+      "We hired them as a think-tank first — market analysis, competitive strategy, the works — before a line of code was written. That roadmap opened a direct-to-dealer channel worth $1.8M in new pipeline our first year.",
+    rating: 5,
+    result: "$1.8M new pipeline",
+    service: "Digital Strategy",
+    color: "#7C3AED",
+  },
+  {
+    id: 7,
+    name: "Sandra Kim",
+    role: "Executive Director",
+    company: "Brightpath Foundation",
+    quote:
+      "As a nonprofit, every dollar matters. Their digital rebrand and storytelling-driven campaigns more than doubled our donations — and they taught our small team to keep improving on our own. That generosity of knowledge is rare.",
+    rating: 5,
+    result: "2.4x donations",
+    service: "Strategy & Brand",
+    color: "#0891B2",
+  },
+];
+
+// ─── Frequently Asked Questions ────────────────────────────────────────────
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+  category: string;
+}
+
+export const FAQS: FaqItem[] = [
+  {
+    id: "faq-pricing",
+    question: "How much do your services cost?",
+    answer:
+      "Our packages start at $1,499 for the Launch tier (a 5-page professional website with foundational SEO), while our most popular Advance tier runs $2,900 per month and covers ongoing SEO, SEM management, analytics, and quarterly Kaizen strategy reviews. Think-Tank engagements — custom apps, fractional CTO work, and full transformation roadmaps — are scoped and priced individually. Every proposal itemizes exactly what you get, and there are never hidden fees.",
+    category: "Pricing",
+  },
+  {
+    id: "faq-timeline",
+    question: "How long does a typical website project take?",
+    answer:
+      "A Launch-tier website typically goes live in 4–6 weeks from kickoff. Larger builds — e-commerce platforms, portals, or custom web applications — generally run 8–16 weeks depending on scope. We plan in transparent milestones so you always know what ships when, and because we operate on Kaizen principles, launch is the beginning of improvement, not the end of the project.",
+    category: "Timelines",
+  },
+  {
+    id: "faq-audit-what",
+    question: "What does the free website audit include?",
+    answer:
+      "Our complimentary audit examines four pillars: speed and performance (Core Web Vitals, mobile experience), SEO visibility (rankings, technical health, content gaps), security and trust (SSL, best practices), and design and conversion (UX friction points and clear opportunities to lift results). You receive a personalized report within 48 hours — with genuinely actionable findings, not a generic sales sheet.",
+    category: "Audit Process",
+  },
+  {
+    id: "faq-audit-obligation",
+    question: "Is the free audit really free? What's the catch?",
+    answer:
+      "It's completely free with zero obligation. We do audits because they're the fastest way to demonstrate how we think — honest, specific, and measurable. If the findings show your site is in great shape, we'll tell you exactly that. If there are opportunities, you're free to fix them yourself, hire anyone you like, or work with us. Most clients choose us after seeing the audit, which is precisely why we can afford to give it away.",
+    category: "Audit Process",
+  },
+  {
+    id: "faq-kaizen",
+    question: "What is the Kaizen methodology and why do you use it?",
+    answer:
+      "Kaizen (改善, 'change for the better') is the Japanese philosophy of continuous improvement, and it has been our operating system since 2003. Rather than betting everything on big, risky overhauls, we run a steady cadence of small, measurable improvements — a 1% gain each week compounds to roughly 67% in a year. Every engagement loops through Discover, Design, Develop, Deploy, and Improve, so your digital presence never plateaus.",
+    category: "Kaizen",
+  },
+  {
+    id: "faq-engagement",
+    question: "How do engagements actually work day to day?",
+    answer:
+      "Every engagement has a named account lead, a shared milestone plan, and honest metrics defined before work begins. You'll get regular progress updates, monthly analytics reporting on retainer plans, and quarterly Kaizen strategy reviews where we assess what moved, what didn't, and what we improve next. You always know who owns what, and you can reach your team directly — no ticket queues, no runaround.",
+    category: "Engagements",
+  },
+  {
+    id: "faq-contract",
+    question: "Do I have to sign a long-term contract?",
+    answer:
+      "No. Project work like the Launch package is a fixed-scope, fixed-price engagement. Monthly plans like Advance run month to month after an initial 90-day period — long enough for compounding improvements to show up in your numbers, short enough that we have to earn your business continuously. We keep clients for years because the results justify it, not because a contract traps them.",
+    category: "Pricing",
+  },
+  {
+    id: "faq-existing-site",
+    question: "Can you improve my existing website, or do I need a full rebuild?",
+    answer:
+      "Usually you don't need a rebuild — and we'll tell you honestly either way. We rebuild when the foundation is truly broken: an unmaintainable codebase, a platform that can't support the business, or structural mobile failures. When the foundation is sound, incremental refinement almost always wins — less risk, less cost, and no SEO traffic cliff. The free audit is the fastest way to find out which camp your site is in.",
+    category: "Engagements",
+  },
+  {
+    id: "faq-results",
+    question: "How soon will I see results from SEO and marketing work?",
+    answer:
+      "Paid campaigns (SEM) generate measurable traffic within days and are typically optimized to strong efficiency inside 60–90 days. SEO is a compounding investment: technical fixes often show movement in 4–8 weeks, while competitive rankings generally build over 3–6 months — then keep growing. We define the success metrics up front and report against them monthly, so you're never guessing whether it's working.",
+    category: "Timelines",
+  },
+  {
+    id: "faq-industries",
+    question: "What kinds of businesses do you work with?",
+    answer:
+      "Since 1999 we've served law firms, healthcare networks, e-commerce brands, restaurant groups, manufacturers, nonprofits, SaaS companies, and multi-location home services businesses. The common thread isn't industry — it's mindset. Our best clients want a strategic partner who measures honestly and improves relentlessly. If that's you, we'd love to talk, whatever your field.",
+    category: "Engagements",
+  },
+];
+

@@ -6,9 +6,12 @@ import ProcessSection from "@/components/ProcessSection";
 import PortfolioSection from "@/components/PortfolioSection";
 import AuditBannerSection from "@/components/AuditBannerSection";
 import TimelineSection from "@/components/TimelineSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import PackagesSection from "@/components/PackagesSection";
 import ResourceCenterSection from "@/components/ResourceCenterSection";
+import FaqSection from "@/components/FaqSection";
 import ContactSection from "@/components/ContactSection";
+
 import Footer from "@/components/Footer";
 
 export default function AppLayout() {
@@ -23,9 +26,12 @@ export default function AppLayout() {
         <PortfolioSection />
         <AuditBannerSection />
         <TimelineSection />
+        <TestimonialsSection />
         <PackagesSection />
         <ResourceCenterSection />
+        <FaqSection />
         <ContactSection />
+
       </main>
       <Footer />
     </div>

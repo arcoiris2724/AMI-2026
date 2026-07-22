@@ -10,8 +10,10 @@ const NAV_LINKS = [
   { label: "Our Story", href: "#timeline" },
   { label: "Packages", href: "#packages" },
   { label: "Resources", href: "#resources" },
+  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
+
 
 
 
