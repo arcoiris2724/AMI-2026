@@ -31,7 +31,7 @@ export const MISSION_STATEMENT =
 export const ABOUT_STORY = [
   "Advance My Idea was founded in 1999, at the dawn of the commercial web, as a solution design firm with a simple conviction: great ideas deserve great execution. While the dot-com era chased hype, we built durable digital foundations for businesses that needed results, not buzzwords.",
   "In 2003 we adopted Kaizen — the Japanese philosophy of continuous improvement — as our operating system. Instead of one-and-done projects, every engagement became a living loop: discover, design, develop, deploy, improve. Small, honest, measurable gains, compounded over months and years, outperform big risky bets. Twenty-plus years of client results have proven it again and again.",
-  "By 2016 we had formalized what clients had long called us: a business development think-tank. We don't just build websites, apps, and campaigns — we sit on your side of the table, analyzing markets, pressure-testing ideas, and designing solutions before a single line of code is written. Strategy and execution, under one roof, accountable to the same numbers.",
+  "By 2016, we formalized what clients had long called us: a business development think-tank. We don't just build websites, apps, and campaigns — we sit on your side of the table, analyzing markets, pressure-testing ideas, and designing solutions before a single line of code is written. Strategy and execution, under one roof, accountable to the same numbers.",
 ];
 
 export interface CoreValue {
@@ -75,7 +75,7 @@ export const CORE_VALUES: CoreValue[] = [
 export const LOGO_MEANING = {
   headline: "The Stained-Glass Eye",
   paragraphs: [
-    "Our logo is a human eye rendered in stained glass, set against a circuit board — and every element is deliberate. The eye is vision: the ability to see an idea's potential before anyone else does. It's the first thing we bring to every engagement.",
+    "Our logo is a human eye rendered in stained glass, set against a circuit board — and every element is deliberate. The eye is vision, the ability to see an idea's potential. It's the first thing we bring to every engagement.",
     "The stained glass tells the rest of the story. Like a great business, a stained-glass window is assembled from many distinct pieces — strategy, design, engineering, marketing — each with its own color and character. Individually they're fragments; leaded together with craft, they become something luminous that light passes through.",
     "And beneath it all, the circuit board: technology as the foundation that carries the vision. Artistry on top, engineering underneath. That's Advance My Idea in a single image — and it's why the eye has watched over every project since we first opened our doors.",
   ],
