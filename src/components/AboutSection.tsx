@@ -9,6 +9,7 @@ import {
   FOUNDER_MESSAGE,
   BOOKING_URL,
 } from "@/data/siteData";
+import { useSiteContent } from "@/hooks/useSiteContent";
 
 const ICONS: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
   RefreshCw,
@@ -18,6 +19,7 @@ const ICONS: Record<string, React.ComponentType<{ className?: string; style?: Re
 };
 
 export default function AboutSection() {
+  const aboutStory = useSiteContent("about_story", ABOUT_STORY);
   return (
     <section id="about" className="py-20 lg:py-28 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,7 +47,7 @@ export default function AboutSection() {
               Founded in {BRAND.founded}. Improving Ever Since.
             </h3>
             <div className="mt-5 space-y-5">
-              {ABOUT_STORY.map((p, i) => (
+              {aboutStory.map((p, i) => (
                 <p key={i} className="text-gray-600 leading-relaxed">
                   {p}
                 </p>

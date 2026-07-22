@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { LOGO_URL, BRAND, BOOKING_URL } from "@/data/siteData";
 
@@ -14,15 +15,27 @@ const NAV_LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
-
-
-
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const scrollTo = (href: string) => {
     setOpen(false);
+    if (location.pathname !== "/") {
+      navigate(`/${href}`);
+      return;
+    }
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const goHome = () => {
+    setOpen(false);
+    if (location.pathname !== "/") {
+      navigate("/");
+      return;
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -38,11 +51,7 @@ export default function Header() {
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 py-3">
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="flex items-center gap-3"
-            aria-label="Back to top"
-          >
+          <button onClick={goHome} className="flex items-center gap-3" aria-label="Go to homepage">
             <img
               src={LOGO_URL}
               alt={`${BRAND.name} logo`}

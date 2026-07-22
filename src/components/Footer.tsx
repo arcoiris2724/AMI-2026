@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CheckCircle2, Facebook, Loader2 } from "lucide-react";
 import { LOGO_URL, BRAND, SERVICES, CRM_SUBSCRIBE_URL, FACEBOOK_URL, BOOKING_URL } from "@/data/siteData";
+import { SERVICE_PAGES } from "@/data/servicePages";
 
 const COMPANY_LINKS = [
   { label: "About Us", href: "#about" },
@@ -12,15 +14,21 @@ const COMPANY_LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
-
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [smsOptIn, setSmsOptIn] = useState(true);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const scrollTo = (href: string) =>
+  const scrollTo = (href: string) => {
+    if (location.pathname !== "/") {
+      navigate(`/${href}`);
+      return;
+    }
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const subscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,16 +91,28 @@ export default function Footer() {
         <div>
           <h4 className="text-sm font-extrabold uppercase tracking-widest text-white">Services</h4>
           <ul className="mt-5 space-y-2.5">
-            {SERVICES.map((s) => (
-              <li key={s.id}>
-                <button
-                  onClick={() => scrollTo("#services")}
-                  className="text-sm text-gray-400 hover:text-white transition-colors"
-                >
-                  {s.title}
-                </button>
-              </li>
-            ))}
+            {SERVICES.map((s) => {
+              const page = SERVICE_PAGES.find((p) => p.serviceId === s.id);
+              return (
+                <li key={s.id}>
+                  {page ? (
+                    <Link
+                      to={`/services/${page.slug}`}
+                      className="text-sm text-gray-400 hover:text-white transition-colors"
+                    >
+                      {s.title}
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => scrollTo("#services")}
+                      className="text-sm text-gray-400 hover:text-white transition-colors"
+                    >
+                      {s.title}
+                    </button>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
 

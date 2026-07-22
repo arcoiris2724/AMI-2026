@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
-  Globe, Search, Target, Smartphone, Lightbulb, Fingerprint, BarChart3, Users,
+  Globe, Search, Target, Smartphone, Lightbulb, Fingerprint, BarChart3, Users, ArrowRight,
 } from "lucide-react";
 import { SERVICES } from "@/data/siteData";
+import { SERVICE_PAGES } from "@/data/servicePages";
+import { useSiteContent } from "@/hooks/useSiteContent";
 
 const ICONS: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
   Globe, Search, Target, Smartphone, Lightbulb, Fingerprint, BarChart3, Users,
@@ -10,6 +13,7 @@ const ICONS: Record<string, React.ComponentType<{ className?: string; style?: Re
 
 export default function ServicesSection() {
   const [active, setActive] = useState<string | null>(null);
+  const services = useSiteContent("services", SERVICES);
 
   const scrollToContact = (serviceId: string) => {
     window.dispatchEvent(new CustomEvent("select-service", { detail: serviceId }));
@@ -33,9 +37,10 @@ export default function ServicesSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {SERVICES.map((s) => {
+          {services.map((s) => {
             const Icon = ICONS[s.icon] ?? Globe;
             const isActive = active === s.id;
+            const page = SERVICE_PAGES.find((p) => p.serviceId === s.id);
             return (
               <div
                 key={s.id}
@@ -61,16 +66,28 @@ export default function ServicesSection() {
                 >
                   <div className="overflow-hidden">
                     <p className="text-sm text-gray-500 leading-relaxed">{s.detail}</p>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        scrollToContact(s.id);
-                      }}
-                      className="mt-4 text-sm font-bold hover:underline"
-                      style={{ color: s.color }}
-                    >
-                      Start a project →
-                    </button>
+                    <div className="mt-4 flex flex-col gap-2">
+                      {page && (
+                        <Link
+                          to={`/services/${page.slug}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="inline-flex items-center gap-1 text-sm font-bold hover:underline"
+                          style={{ color: s.color }}
+                        >
+                          Learn more <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      )}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          scrollToContact(s.id);
+                        }}
+                        className="text-left text-sm font-bold hover:underline"
+                        style={{ color: s.color }}
+                      >
+                        Start a project →
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

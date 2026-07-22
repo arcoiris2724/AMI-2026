@@ -1,5 +1,16 @@
 import { useState } from "react";
-import { CheckCircle2, Clock, Gauge, Loader2, Search, ShieldCheck, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  Gauge,
+  Loader2,
+  Search,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+import { supabase } from "@/lib/supabase";
 import { CRM_SUBSCRIBE_URL, BRAND } from "@/data/siteData";
 
 const AUDIT_CHECKS = [
@@ -10,22 +21,49 @@ const AUDIT_CHECKS = [
 ];
 
 export default function AuditBannerSection() {
+  const [step, setStep] = useState(1);
   const [websiteUrl, setWebsiteUrl] = useState("");
+  const [businessName, setBusinessName] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [goals, setGoals] = useState("");
   const [smsOptIn, setSmsOptIn] = useState(true);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [stepError, setStepError] = useState("");
+
+  const goToStep2 = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!websiteUrl.trim() || !businessName.trim()) {
+      setStepError("Please enter your website URL and business name.");
+      return;
+    }
+    setStepError("");
+    setStep(2);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim() || !name.trim() || !websiteUrl.trim()) return;
+    if (!email.trim() || !name.trim()) return;
     setStatus("loading");
+    const cleanUrl = websiteUrl
+      .trim()
+      .replace(/^https?:\/\//i, "")
+      .replace(/\/+$/, "");
     try {
-      const cleanUrl = websiteUrl
-        .trim()
-        .replace(/^https?:\/\//i, "")
-        .replace(/\/+$/, "");
+      // 1. Save the audit request to the database
+      const { error: dbError } = await supabase.from("audit_requests").insert({
+        website_url: cleanUrl,
+        business_name: businessName.trim(),
+        name: name.trim(),
+        email: email.trim(),
+        phone: phone.trim() || null,
+        sms_opt_in: smsOptIn === true,
+        goals: goals.trim() || null,
+      });
+      if (dbError) throw dbError;
+
+      // 2. Subscribe the contact to the CRM with the audit-request tag
       await fetch(CRM_SUBSCRIBE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -39,6 +77,7 @@ export default function AuditBannerSection() {
         }),
       });
       setStatus("success");
+      setStep(3);
     } catch {
       setStatus("error");
     }
@@ -52,7 +91,6 @@ export default function AuditBannerSection() {
           <div key={c} className="flex-1" style={{ backgroundColor: c }} />
         ))}
       </div>
-      {/* Decorative glow shapes */}
       <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#FACC15]/20 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-32 -right-20 h-80 w-80 rounded-full bg-[#E4342B]/25 blur-3xl" />
 
@@ -91,17 +129,39 @@ export default function AuditBannerSection() {
           </div>
         </div>
 
-        {/* Right: form card */}
+        {/* Right: multi-step form card */}
         <div className="rounded-2xl bg-white p-8 shadow-2xl">
-          {status === "success" ? (
-            <div className="flex flex-col items-center justify-center text-center py-12">
+          {/* Progress indicator */}
+          {step < 3 && (
+            <div className="mb-6">
+              <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-gray-400">
+                <span className={step >= 1 ? "text-[#1D4ED8]" : ""}>1 · Your Website</span>
+                <span className={step >= 2 ? "text-[#1D4ED8]" : ""}>2 · Your Details</span>
+                <span>3 · Confirmation</span>
+              </div>
+              <div className="mt-2 flex gap-1.5">
+                {[1, 2, 3].map((s) => (
+                  <div
+                    key={s}
+                    className={`h-1.5 flex-1 rounded-full ${step >= s ? "bg-[#1D4ED8]" : "bg-gray-200"}`}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {step === 3 ? (
+            /* ── Confirmation ── */
+            <div className="flex flex-col items-center justify-center text-center py-10">
               <CheckCircle2 className="h-16 w-16 text-[#16A34A]" />
               <h3 className="mt-4 text-2xl font-extrabold text-gray-900">
                 Your Audit Is Underway!
               </h3>
               <p className="mt-2 text-gray-600 max-w-sm">
                 Thanks, {name.split(" ")[0] || "friend"}! Our strategists are
-                reviewing <span className="font-semibold text-gray-900">{websiteUrl}</span> now.
+                reviewing{" "}
+                <span className="font-semibold text-gray-900">{websiteUrl}</span> for{" "}
+                <span className="font-semibold text-gray-900">{businessName}</span> now.
                 Expect your personalized audit report in your inbox within{" "}
                 <span className="font-semibold text-gray-900">48 hours</span>.
               </p>
@@ -110,12 +170,12 @@ export default function AuditBannerSection() {
                 Results within 48 hours — guaranteed
               </div>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
+          ) : step === 1 ? (
+            /* ── Step 1: website + business ── */
+            <form onSubmit={goToStep2} className="space-y-5">
               <h3 className="text-xl font-extrabold text-gray-900">
                 Request Your Free Audit
               </h3>
-
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-1.5">
                   Website URL *
@@ -129,7 +189,51 @@ export default function AuditBannerSection() {
                   className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-[#1D4ED8] focus:ring-2 focus:ring-blue-100 outline-none"
                 />
               </div>
-
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-1.5">
+                  Business Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={businessName}
+                  onChange={(e) => setBusinessName(e.target.value)}
+                  placeholder="Your business name"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-[#1D4ED8] focus:ring-2 focus:ring-blue-100 outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-1.5">
+                  What would you most like to improve? (optional)
+                </label>
+                <input
+                  type="text"
+                  value={goals}
+                  onChange={(e) => setGoals(e.target.value)}
+                  placeholder="e.g. more leads, faster site, better rankings"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-[#1D4ED8] focus:ring-2 focus:ring-blue-100 outline-none"
+                />
+              </div>
+              {stepError && (
+                <p className="text-sm font-semibold text-red-600">{stepError}</p>
+              )}
+              <button
+                type="submit"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-[#1D4ED8] px-6 py-3.5 font-bold text-white hover:bg-[#173db3] transition-colors"
+              >
+                Continue
+                <ArrowRight className="h-5 w-5" />
+              </button>
+              <p className="text-center text-xs text-gray-400">
+                100% free. No obligation. Results within 48 hours.
+              </p>
+            </form>
+          ) : (
+            /* ── Step 2: contact details ── */
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <h3 className="text-xl font-extrabold text-gray-900">
+                Where should we send your report?
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1.5">Name *</label>
@@ -183,21 +287,32 @@ export default function AuditBannerSection() {
                 </p>
               )}
 
-              <button
-                type="submit"
-                disabled={status === "loading"}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-[#E4342B] px-6 py-3.5 font-bold text-white hover:bg-[#c22a22] transition-colors disabled:opacity-60"
-              >
-                {status === "loading" ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  <Gauge className="h-5 w-5" />
-                )}
-                {status === "loading" ? "Submitting…" : "Get My Free Audit"}
-              </button>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setStep(1)}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-lg border-2 border-gray-300 px-5 py-3.5 font-bold text-gray-700 hover:border-gray-500 transition-colors"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                  Back
+                </button>
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-[#E4342B] px-6 py-3.5 font-bold text-white hover:bg-[#c22a22] transition-colors disabled:opacity-60"
+                >
+                  {status === "loading" ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <Gauge className="h-5 w-5" />
+                  )}
+                  {status === "loading" ? "Submitting…" : "Get My Free Audit"}
+                </button>
+              </div>
 
               <p className="text-center text-xs text-gray-400">
-                100% free. No obligation. Results within 48 hours.
+                Auditing <span className="font-semibold text-gray-600">{websiteUrl}</span> for{" "}
+                <span className="font-semibold text-gray-600">{businessName}</span>
               </p>
             </form>
           )}

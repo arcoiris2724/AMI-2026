@@ -3,12 +3,33 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import ArticlePage from "./pages/ArticlePage";
+import ServicePage from "./pages/ServicePage";
+import CaseStudyPage from "./pages/CaseStudyPage";
+import AdminPage from "./pages/AdminPage";
 
 const queryClient = new QueryClient();
+
+/** Scrolls to top on route change, or to the hash target when present. */
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      // wait a tick for the page to render before scrolling to the anchor
+      setTimeout(() => {
+        document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+      }, 50);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
+  return null;
+}
 
 const App = () => (
   <ThemeProvider defaultTheme="light">
@@ -17,8 +38,13 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollManager />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/resources/:slug" element={<ArticlePage />} />
+            <Route path="/services/:slug" element={<ServicePage />} />
+            <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
+            <Route path="/admin" element={<AdminPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

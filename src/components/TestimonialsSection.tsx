@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Star, Quote, ChevronLeft, ChevronRight, TrendingUp } from "lucide-react";
 import { TESTIMONIALS } from "@/data/siteData";
+import { useSiteContent } from "@/hooks/useSiteContent";
 
 function Stars({ rating, color }: { rating: number; color: string }) {
   return (
@@ -22,10 +23,11 @@ function Stars({ rating, color }: { rating: number; color: string }) {
 export default function TestimonialsSection() {
   const [page, setPage] = useState(0);
   const [paused, setPaused] = useState(false);
+  const testimonials = useSiteContent("testimonials", TESTIMONIALS);
 
   // 3 cards per page on desktop; carousel pages through the list
   const perPage = 3;
-  const pageCount = Math.ceil(TESTIMONIALS.length / perPage);
+  const pageCount = Math.ceil(testimonials.length / perPage);
 
   const next = useCallback(() => setPage((p) => (p + 1) % pageCount), [pageCount]);
   const prev = useCallback(() => setPage((p) => (p - 1 + pageCount) % pageCount), [pageCount]);
@@ -37,7 +39,7 @@ export default function TestimonialsSection() {
     return () => clearInterval(t);
   }, [next, paused]);
 
-  const visible = TESTIMONIALS.slice(page * perPage, page * perPage + perPage);
+  const visible = testimonials.slice(page * perPage, page * perPage + perPage);
 
   return (
     <section id="testimonials" className="py-20 lg:py-28 bg-white relative overflow-hidden">

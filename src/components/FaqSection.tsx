@@ -6,8 +6,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { FAQS, COLORS, BOOKING_URL } from "@/data/siteData";
+import { useSiteContent } from "@/hooks/useSiteContent";
 
 export default function FaqSection() {
+  const faqs = useSiteContent("faqs", FAQS);
   const scrollToAudit = () => {
     document.querySelector("#free-audit")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -36,7 +38,7 @@ export default function FaqSection() {
         </div>
 
         <Accordion type="single" collapsible className="space-y-4">
-          {FAQS.map((faq, i) => {
+          {faqs.map((faq, i) => {
             const color = COLORS[i % COLORS.length];
             return (
               <AccordionItem
