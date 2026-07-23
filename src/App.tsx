@@ -13,8 +13,10 @@ import ServicePage from "./pages/ServicePage";
 import CaseStudyPage from "./pages/CaseStudyPage";
 import AdminPage from "./pages/AdminPage";
 import SectionPage from "./pages/SectionPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import { SECTION_PAGES } from "./data/sectionPages";
 import CookieConsentBanner from "./components/CookieConsentBanner";
+
 
 
 
@@ -50,6 +52,8 @@ const App = () => (
             <Route path="/services/:slug" element={<ServicePage />} />
             <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+
             {/* Dedicated indexable section pages: /about, /services, /contact, etc. */}
             {SECTION_PAGES.map((p) => (
               <Route key={p.slug} path={`/${p.slug}`} element={<SectionPage />} />

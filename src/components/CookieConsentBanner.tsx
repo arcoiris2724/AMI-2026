@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Cookie, X } from "lucide-react";
+
 
 const STORAGE_KEY = "ami-cookie-consent";
 
@@ -48,8 +50,16 @@ export default function CookieConsentBanner() {
           </span>
           <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
             We use analytics cookies (Google Analytics) to understand how visitors
-            use our site and to improve your experience. No personal data is sold.
+            use our site and to improve your experience. No personal data is sold.{" "}
+            <Link
+              to="/privacy-policy"
+              className="font-semibold text-blue-700 underline underline-offset-2 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              Learn more in our Privacy Policy
+            </Link>
+            .
           </p>
+
         </div>
 
         <div className="flex shrink-0 items-center gap-2 self-end sm:self-auto">

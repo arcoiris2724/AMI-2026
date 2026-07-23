@@ -198,7 +198,15 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-gray-500">
             © {new Date().getFullYear()} {BRAND.name}. All rights reserved. Founded {BRAND.founded}.
+            {" · "}
+            <Link
+              to="/privacy-policy"
+              className="text-gray-400 hover:text-white underline underline-offset-2 transition-colors"
+            >
+              Privacy Policy
+            </Link>
           </p>
+
           <div className="flex h-1.5 w-40 rounded-full overflow-hidden">
             {["#E4342B", "#1D4ED8", "#FACC15", "#16A34A", "#DB2777", "#7C3AED"].map((c) => (
               <div key={c} className="flex-1" style={{ backgroundColor: c }} />
