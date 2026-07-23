@@ -14,6 +14,8 @@ import CaseStudyPage from "./pages/CaseStudyPage";
 import AdminPage from "./pages/AdminPage";
 import SectionPage from "./pages/SectionPage";
 import { SECTION_PAGES } from "./data/sectionPages";
+import CookieConsentBanner from "./components/CookieConsentBanner";
+
 
 
 const queryClient = new QueryClient();
@@ -54,6 +56,7 @@ const App = () => (
             ))}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <CookieConsentBanner />
 
         </BrowserRouter>
       </TooltipProvider>
