@@ -1,41 +1,52 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { LOGO_URL, BRAND, BOOKING_URL } from "@/data/siteData";
+import { SECTION_PAGES, SectionPageMeta } from "@/data/sectionPages";
 
-const NAV_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
-  { label: "Work", href: "#portfolio" },
-  { label: "Our Story", href: "#timeline" },
-  { label: "Packages", href: "#packages" },
-  { label: "Resources", href: "#resources" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
+/** Order of nav items (by slug) */
+const NAV_SLUGS = [
+  "about",
+  "services",
+  "process",
+  "portfolio",
+  "our-story",
+  "packages",
+  "resources",
+  "faq",
+  "contact",
 ];
+
+const NAV_PAGES = NAV_SLUGS
+  .map((slug) => SECTION_PAGES.find((p) => p.slug === slug))
+  .filter((p): p is SectionPageMeta => Boolean(p));
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
 
-  const scrollTo = (href: string) => {
+  /**
+   * Real hrefs (/about, /services…) so search engines can crawl every page.
+   * When already on the homepage, intercept the click and smooth-scroll to
+   * the matching section instead of navigating.
+   */
+  const handleNavClick = (e: React.MouseEvent, page: SectionPageMeta) => {
     setOpen(false);
-    if (location.pathname !== "/") {
-      navigate(`/${href}`);
-      return;
+    if (location.pathname === "/") {
+      const target = document.querySelector(page.anchor);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth" });
+      }
     }
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const goHome = () => {
+  const goHome = (e: React.MouseEvent) => {
     setOpen(false);
-    if (location.pathname !== "/") {
-      navigate("/");
-      return;
+    if (location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -51,7 +62,7 @@ export default function Header() {
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 py-3">
-          <button onClick={goHome} className="flex items-center gap-3" aria-label="Go to homepage">
+          <Link to="/" onClick={goHome} className="flex items-center gap-3" aria-label="Go to homepage">
             <img
               src={LOGO_URL}
               alt={`${BRAND.name} logo`}
@@ -65,17 +76,22 @@ export default function Header() {
                 Est. {BRAND.founded} · Kaizen Driven
               </span>
             </div>
-          </button>
+          </Link>
 
           <nav className="hidden lg:flex items-center gap-7">
-            {NAV_LINKS.map((l) => (
-              <button
-                key={l.href}
-                onClick={() => scrollTo(l.href)}
-                className="text-sm font-semibold text-gray-700 hover:text-[#1D4ED8] transition-colors"
+            {NAV_PAGES.map((p) => (
+              <Link
+                key={p.slug}
+                to={`/${p.slug}`}
+                onClick={(e) => handleNavClick(e, p)}
+                className={`text-sm font-semibold transition-colors ${
+                  location.pathname === `/${p.slug}`
+                    ? "text-[#1D4ED8]"
+                    : "text-gray-700 hover:text-[#1D4ED8]"
+                }`}
               >
-                {l.label}
-              </button>
+                {p.label}
+              </Link>
             ))}
             <a
               href={BOOKING_URL}
@@ -99,14 +115,15 @@ export default function Header() {
 
       {open && (
         <div className="lg:hidden border-t border-gray-100 bg-white px-4 pb-4">
-          {NAV_LINKS.map((l) => (
-            <button
-              key={l.href}
-              onClick={() => scrollTo(l.href)}
+          {NAV_PAGES.map((p) => (
+            <Link
+              key={p.slug}
+              to={`/${p.slug}`}
+              onClick={(e) => handleNavClick(e, p)}
               className="block w-full text-left py-3 text-sm font-semibold text-gray-700 border-b border-gray-50"
             >
-              {l.label}
-            </button>
+              {p.label}
+            </Link>
           ))}
           <a
             href={BOOKING_URL}

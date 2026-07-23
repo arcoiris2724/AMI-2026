@@ -11,8 +11,11 @@ import { useSiteContent } from "@/hooks/useSiteContent";
 export default function FaqSection() {
   const faqs = useSiteContent("faqs", FAQS);
   const scrollToAudit = () => {
-    document.querySelector("#free-audit")?.scrollIntoView({ behavior: "smooth" });
+    const el = document.querySelector("#free-audit");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+    else window.location.assign("/#free-audit");
   };
+
 
   return (
     <section id="faq" className="py-20 lg:py-28 bg-gray-50 relative overflow-hidden">

@@ -17,8 +17,11 @@ export default function ServicesSection() {
 
   const scrollToContact = (serviceId: string) => {
     window.dispatchEvent(new CustomEvent("select-service", { detail: serviceId }));
-    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+    const el = document.querySelector("#contact");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+    else window.location.assign("/#contact");
   };
+
 
   return (
     <section id="services" className="py-20 lg:py-28 bg-white">

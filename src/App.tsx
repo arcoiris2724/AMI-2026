@@ -12,6 +12,9 @@ import ArticlePage from "./pages/ArticlePage";
 import ServicePage from "./pages/ServicePage";
 import CaseStudyPage from "./pages/CaseStudyPage";
 import AdminPage from "./pages/AdminPage";
+import SectionPage from "./pages/SectionPage";
+import { SECTION_PAGES } from "./data/sectionPages";
+
 
 const queryClient = new QueryClient();
 
@@ -45,8 +48,13 @@ const App = () => (
             <Route path="/services/:slug" element={<ServicePage />} />
             <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
             <Route path="/admin" element={<AdminPage />} />
+            {/* Dedicated indexable section pages: /about, /services, /contact, etc. */}
+            {SECTION_PAGES.map((p) => (
+              <Route key={p.slug} path={`/${p.slug}`} element={<SectionPage />} />
+            ))}
             <Route path="*" element={<NotFound />} />
           </Routes>
+
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

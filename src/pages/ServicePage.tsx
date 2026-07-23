@@ -70,7 +70,8 @@ export default function ServicePage() {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "Services", item: `${SITE_URL}/#services` },
+        { "@type": "ListItem", position: 2, name: "Services", item: `${SITE_URL}/services` },
+
         { "@type": "ListItem", position: 3, name: service?.title ?? page.h1, item: `${SITE_URL}/services/${page.slug}` },
       ],
     },
@@ -95,7 +96,8 @@ export default function ServicePage() {
           />
           <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <Link
-              to="/#services"
+              to="/services"
+
               className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -124,7 +126,8 @@ export default function ServicePage() {
                 Book a Free Consultation
               </a>
               <Link
-                to="/#free-audit"
+                to="/contact#free-audit"
+
                 className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/30 px-7 py-3.5 font-bold text-white hover:bg-white/10 transition-colors"
               >
                 <Gauge className="h-5 w-5" />
@@ -274,7 +277,8 @@ export default function ServicePage() {
                 Book a Free Consultation
               </a>
               <Link
-                to="/#free-audit"
+                to="/contact#free-audit"
+
                 className="rounded-lg border-2 border-gray-900 px-7 py-3.5 font-bold text-gray-900 hover:bg-gray-900 hover:text-white transition-colors"
               >
                 Get My Free Audit

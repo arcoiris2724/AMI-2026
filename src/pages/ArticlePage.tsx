@@ -26,8 +26,9 @@ export default function ArticlePage() {
             The article you're looking for doesn't exist or has moved.
           </p>
           <Link
-            to="/#resources"
+            to="/resources"
             className="mt-6 inline-block rounded-lg bg-gray-900 px-6 py-3 font-bold text-white hover:bg-[#E4342B] transition-colors"
+
           >
             Browse the Resource Center
           </Link>
@@ -63,7 +64,8 @@ export default function ArticlePage() {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "Resource Center", item: `${SITE_URL}/#resources` },
+        { "@type": "ListItem", position: 2, name: "Resource Center", item: `${SITE_URL}/resources` },
+
         { "@type": "ListItem", position: 3, name: article.title, item: `${SITE_URL}/resources/${article.id}` },
       ],
     },
@@ -83,7 +85,8 @@ export default function ArticlePage() {
       <main className="py-16 lg:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
-            to="/#resources"
+            to="/resources"
+
             className="inline-flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-[#1D4ED8] transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />

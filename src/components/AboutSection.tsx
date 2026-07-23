@@ -181,9 +181,12 @@ export default function AboutSection() {
                   Book a Consultation
                 </a>
                 <button
-                  onClick={() =>
-                    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })
-                  }
+                  onClick={() => {
+                    const el = document.querySelector("#contact");
+                    if (el) el.scrollIntoView({ behavior: "smooth" });
+                    else window.location.assign("/#contact");
+                  }}
+
                   className="rounded-lg border-2 border-gray-900 px-6 py-3 text-sm font-bold text-gray-900 transition-colors hover:bg-gray-900 hover:text-white"
                 >
                   Tell Us Your Idea

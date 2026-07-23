@@ -19,7 +19,8 @@ export default function CaseStudyPage() {
           <h1 className="text-3xl font-extrabold text-gray-900">Case Study Not Found</h1>
           <p className="mt-3 text-gray-600">Browse all of our client success stories.</p>
           <Link
-            to="/#portfolio"
+            to="/portfolio"
+
             className="mt-6 inline-block rounded-lg bg-gray-900 px-6 py-3 font-bold text-white hover:bg-[#E4342B] transition-colors"
           >
             View Our Work
@@ -56,7 +57,8 @@ export default function CaseStudyPage() {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "Portfolio", item: `${SITE_URL}/#portfolio` },
+        { "@type": "ListItem", position: 2, name: "Portfolio", item: `${SITE_URL}/portfolio` },
+
         { "@type": "ListItem", position: 3, name: portfolioItem.title, item: `${SITE_URL}/case-studies/${study.slug}` },
       ],
     },
@@ -78,7 +80,8 @@ export default function CaseStudyPage() {
         <section className="bg-gray-950 py-16 lg:py-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <Link
-              to="/#portfolio"
+              to="/portfolio"
+
               className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -209,7 +212,8 @@ export default function CaseStudyPage() {
                 Discuss a Project Like This
               </a>
               <Link
-                to="/#free-audit"
+                to="/contact#free-audit"
+
                 className="rounded-lg border-2 border-gray-900 px-7 py-3.5 font-bold text-gray-900 hover:bg-gray-900 hover:text-white transition-colors"
               >
                 Get My Free Audit

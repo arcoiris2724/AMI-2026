@@ -4,8 +4,11 @@ import { PACKAGES } from "@/data/siteData";
 export default function PackagesSection() {
   const getStarted = (pkgName: string) => {
     window.dispatchEvent(new CustomEvent("select-package", { detail: pkgName }));
-    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+    const el = document.querySelector("#contact");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+    else window.location.assign("/#contact");
   };
+
 
   return (
     <section id="packages" className="py-20 lg:py-28 bg-gray-50">

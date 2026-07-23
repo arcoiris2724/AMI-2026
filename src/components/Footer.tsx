@@ -1,18 +1,15 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CheckCircle2, Facebook, Loader2 } from "lucide-react";
 import { LOGO_URL, BRAND, SERVICES, CRM_SUBSCRIBE_URL, FACEBOOK_URL, BOOKING_URL } from "@/data/siteData";
 import { SERVICE_PAGES } from "@/data/servicePages";
+import { SECTION_PAGES, SectionPageMeta } from "@/data/sectionPages";
 
-const COMPANY_LINKS = [
-  { label: "About Us", href: "#about" },
-  { label: "Our Process", href: "#process" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Resource Center", href: "#resources" },
-  { label: "Our Story", href: "#timeline" },
-  { label: "Packages", href: "#packages" },
-  { label: "Contact", href: "#contact" },
-];
+/** Company column links (by slug) — real crawlable routes */
+const COMPANY_SLUGS = ["about", "process", "portfolio", "resources", "our-story", "packages", "faq", "contact"];
+const COMPANY_PAGES = COMPANY_SLUGS
+  .map((slug) => SECTION_PAGES.find((p) => p.slug === slug))
+  .filter((p): p is SectionPageMeta => Boolean(p));
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -20,15 +17,18 @@ export default function Footer() {
   const [smsOptIn, setSmsOptIn] = useState(true);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const location = useLocation();
-  const navigate = useNavigate();
 
-  const scrollTo = (href: string) => {
-    if (location.pathname !== "/") {
-      navigate(`/${href}`);
-      return;
+  /** Smooth-scroll to the section when already on the homepage; otherwise navigate normally. */
+  const handleSectionClick = (e: React.MouseEvent, page: SectionPageMeta) => {
+    if (location.pathname === "/") {
+      const target = document.querySelector(page.anchor);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth" });
+      }
     }
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
+
 
   const subscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,21 +95,12 @@ export default function Footer() {
               const page = SERVICE_PAGES.find((p) => p.serviceId === s.id);
               return (
                 <li key={s.id}>
-                  {page ? (
-                    <Link
-                      to={`/services/${page.slug}`}
-                      className="text-sm text-gray-400 hover:text-white transition-colors"
-                    >
-                      {s.title}
-                    </Link>
-                  ) : (
-                    <button
-                      onClick={() => scrollTo("#services")}
-                      className="text-sm text-gray-400 hover:text-white transition-colors"
-                    >
-                      {s.title}
-                    </button>
-                  )}
+                  <Link
+                    to={page ? `/services/${page.slug}` : "/services"}
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                  >
+                    {s.title}
+                  </Link>
                 </li>
               );
             })}
@@ -120,14 +111,15 @@ export default function Footer() {
         <div>
           <h4 className="text-sm font-extrabold uppercase tracking-widest text-white">Company</h4>
           <ul className="mt-5 space-y-2.5">
-            {COMPANY_LINKS.map((l) => (
-              <li key={l.href}>
-                <button
-                  onClick={() => scrollTo(l.href)}
+            {COMPANY_PAGES.map((p) => (
+              <li key={p.slug}>
+                <Link
+                  to={`/${p.slug}`}
+                  onClick={(e) => handleSectionClick(e, p)}
                   className="text-sm text-gray-400 hover:text-white transition-colors"
                 >
-                  {l.label}
-                </button>
+                  {p.label}
+                </Link>
               </li>
             ))}
             <li>
@@ -142,6 +134,7 @@ export default function Footer() {
             </li>
           </ul>
         </div>
+
 
         {/* Newsletter */}
         <div>
