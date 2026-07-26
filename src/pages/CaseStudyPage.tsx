@@ -3,13 +3,14 @@ import { ArrowLeft, ArrowRight, Quote, Target, TrendingUp, Wrench } from "lucide
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Seo, { SITE_URL } from "@/components/Seo";
-import { CASE_STUDIES, getCaseStudy } from "@/data/caseStudies";
-import { BOOKING_URL, BRAND, LOGO_URL, PORTFOLIO } from "@/data/siteData";
+import { BOOKING_URL, BRAND, LOGO_URL } from "@/data/siteData";
+import { useMergedCaseStudies } from "@/hooks/useCaseStudies";
 
 export default function CaseStudyPage() {
   const { slug } = useParams<{ slug: string }>();
-  const study = getCaseStudy(slug ?? "");
-  const portfolioItem = study ? PORTFOLIO.find((p) => p.id === study.portfolioId) : undefined;
+  const { portfolio, caseStudies } = useMergedCaseStudies();
+  const study = caseStudies.find((c) => c.slug === (slug ?? ""));
+  const portfolioItem = study ? portfolio.find((p) => p.id === study.portfolioId) : undefined;
 
   if (!study || !portfolioItem) {
     return (
@@ -31,10 +32,11 @@ export default function CaseStudyPage() {
     );
   }
 
-  const others = CASE_STUDIES.filter((c) => c.slug !== study.slug)
-    .map((c) => ({ study: c, item: PORTFOLIO.find((p) => p.id === c.portfolioId)! }))
+  const others = caseStudies.filter((c) => c.slug !== study.slug)
+    .map((c) => ({ study: c, item: portfolio.find((p) => p.id === c.portfolioId)! }))
     .filter((x) => x.item)
     .slice(0, 3);
+
 
   const jsonLd = [
     {

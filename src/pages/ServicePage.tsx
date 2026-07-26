@@ -10,12 +10,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { getServicePage, SERVICE_PAGES } from "@/data/servicePages";
-import { BOOKING_URL, BRAND, PORTFOLIO, SERVICES } from "@/data/siteData";
-import { getCaseStudyByPortfolioId } from "@/data/caseStudies";
+import { BOOKING_URL, BRAND, SERVICES } from "@/data/siteData";
+import { useMergedCaseStudies } from "@/hooks/useCaseStudies";
 
 export default function ServicePage() {
   const { slug } = useParams<{ slug: string }>();
+  const { portfolio, caseStudies } = useMergedCaseStudies();
   const page = getServicePage(slug ?? "");
+
 
   if (!page) {
     return (
@@ -43,7 +45,8 @@ export default function ServicePage() {
 
   const service = SERVICES.find((s) => s.id === page.serviceId);
   const color = service?.color ?? "#1D4ED8";
-  const portfolioItems = PORTFOLIO.filter((p) => p.category === page.portfolioCategory).slice(0, 3);
+  const portfolioItems = portfolio.filter((p) => p.category === page.portfolioCategory).slice(0, 3);
+
   const otherServices = SERVICE_PAGES.filter((s) => s.slug !== page.slug);
 
   const jsonLd = [
@@ -189,7 +192,8 @@ export default function ServicePage() {
               </h2>
               <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {portfolioItems.map((p) => {
-                  const cs = getCaseStudyByPortfolioId(p.id);
+                  const cs = caseStudies.find((c) => c.portfolioId === p.id);
+
                   const card = (
                     <>
                       <div className="relative overflow-hidden aspect-[4/3]">

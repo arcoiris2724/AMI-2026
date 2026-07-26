@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, TrendingUp } from "lucide-react";
-import { PORTFOLIO, PORTFOLIO_CATEGORIES } from "@/data/siteData";
-import { getCaseStudyByPortfolioId } from "@/data/caseStudies";
+import { PORTFOLIO_CATEGORIES } from "@/data/siteData";
+import { useMergedCaseStudies } from "@/hooks/useCaseStudies";
 
 export default function PortfolioSection() {
   const [filter, setFilter] = useState("All");
+  const { portfolio, caseStudies } = useMergedCaseStudies();
 
-  const items = filter === "All" ? PORTFOLIO : PORTFOLIO.filter((p) => p.category === filter);
+  const items = filter === "All" ? portfolio : portfolio.filter((p) => p.category === filter);
 
   return (
     <section id="portfolio" className="py-20 lg:py-28 bg-gray-50">
@@ -43,7 +44,7 @@ export default function PortfolioSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
           {items.map((p) => {
-            const cs = getCaseStudyByPortfolioId(p.id);
+            const cs = caseStudies.find((c) => c.portfolioId === p.id);
             const inner = (
               <>
                 <div className="relative overflow-hidden aspect-[4/3]">

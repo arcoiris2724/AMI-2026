@@ -14,16 +14,20 @@ import {
   Testimonial,
 } from "@/data/siteData";
 import { useSiteContent } from "@/hooks/useSiteContent";
+import CaseStudiesManager from "@/components/admin/CaseStudiesManager";
+import { CUSTOM_CASE_STUDIES_KEY } from "@/hooks/useCaseStudies";
 
-type Tab = "about" | "services" | "testimonials" | "faqs" | "audits";
+type Tab = "about" | "services" | "testimonials" | "faqs" | "casestudies" | "audits";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "about", label: "About Story" },
   { id: "services", label: "Services" },
   { id: "testimonials", label: "Testimonials" },
   { id: "faqs", label: "FAQs" },
+  { id: "casestudies", label: "Case Studies" },
   { id: "audits", label: "Audit Requests" },
 ];
+
 
 interface AuditRequest {
   id: string;
@@ -362,7 +366,16 @@ export default function AdminPage() {
             </div>
           )}
 
+          {/* ── Case Studies ── */}
+          {tab === "casestudies" && (
+            <CaseStudiesManager
+              saving={saving}
+              onSave={(studies) => save(CUSTOM_CASE_STUDIES_KEY, studies)}
+            />
+          )}
+
           {/* ── Audit requests ── */}
+
           {tab === "audits" && (
             <div>
               <div className="flex items-center justify-between">
